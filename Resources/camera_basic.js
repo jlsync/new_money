@@ -11,6 +11,8 @@ Titanium.Media.showCamera({
 		{
 			var imageView = Ti.UI.createImageView({width:win.width,height:win.height,image:event.media});
 			win.add(imageView);  
+
+
 		}
 		else
 		{

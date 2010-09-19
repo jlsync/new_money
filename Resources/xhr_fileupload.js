@@ -36,7 +36,8 @@ Titanium.Media.openPhotoGallery({
       ind.hide();
 
       var result = JSON.parse(this.responseText);
-			Ti.UI.createAlertDialog({title:'Your Money', message:'result: ' + result.total_money}).show();
+      var amount = result.total_money;
+			Ti.UI.createAlertDialog({title:'Your Money', message:'amount: ' + amount}).show();
 			Ti.API.info('IN ONLOAD ' + this.status + ' readyState ' + this.readyState);
 
       var subwindow = Ti.UI.createWindow({ 
@@ -51,7 +52,6 @@ Titanium.Media.openPhotoGallery({
           title: '',
           //backgroundImage:'btn_xpressCheckout.gif',
           backgroundImage:'btn_donate_LG.gif',
-              //<input type="image" src="http://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
               //top:280,
               //right:20,
               //left:150,
@@ -62,8 +62,10 @@ Titanium.Media.openPhotoGallery({
       PayPalButton.addEventListener('click',function(e) {
 
       //open link in safari - application will close
-      Titanium.Platform.openURL('http://localhost:3000/orders/create?amount=' + result.total_money);
-
+      // justgiving 2344 is WWF UK
+      var url = 'http://www.justgiving.com/donation/direct/charity/2344?frequency=single&amount=' + amount ;
+			Ti.API.info('url is  ' + url );
+      Titanium.Platform.openURL(url);
       });
 
      win.add(PayPalButton);
@@ -76,7 +78,7 @@ Titanium.Media.openPhotoGallery({
 			Ti.API.info('ONSENDSTREAM - PROGRESS: ' + e.progress);
 		};
 		// open the client
-		xhr.open('POST','http://127.0.0.1:3000/images');
+		xhr.open('POST','http://192.168.109.165:3000/images');
 
 		// send the data
 		xhr.send({'upload[image_file]':image,message:'check me out'});

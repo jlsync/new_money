@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>mon.cont.er</id>
-    <name>new_money_counter</name>
-    <version>1.0</version>
-    <publisher>not specified</publisher>
-    <url>not specified</url>
-    <description>not specified</description>
-    <copyright>not specified</copyright>
-    <icon>appicon.png</icon>
+<id>mon.cont.er</id>
+<name>new_money_counter</name>
+<version>1.0</version>
+<publisher>jason</publisher>
+<url>http://www.jason-lee.net.au</url>
+<description>No description provided</description>
+<copyright>2010 by jason</copyright>
+<icon>default_app_logo.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
     <statusbar-style>default</statusbar-style>
