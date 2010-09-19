@@ -33,11 +33,43 @@ Titanium.Media.openPhotoGallery({
 		xhr.setTimeout(20000);
 		xhr.onload = function(e)
 		{
-      //var result = eval(this.responseText);
+      ind.hide();
+
       var result = JSON.parse(this.responseText);
 			Ti.UI.createAlertDialog({title:'Your Money', message:'result: ' + result.total_money}).show();
 			Ti.API.info('IN ONLOAD ' + this.status + ' readyState ' + this.readyState);
+
+      var subwindow = Ti.UI.createWindow({ 
+        height: 100,
+        width: 100,
+        borderWidth: 1,
+        borderColor: "#CCC",
+        borderRadius: 6
+      });
+
+      var PayPalButton = Titanium.UI.createButton({
+          title: '',
+          //backgroundImage:'btn_xpressCheckout.gif',
+          backgroundImage:'btn_donate_LG.gif',
+              //<input type="image" src="http://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+              //top:280,
+              //right:20,
+              //left:150,
+              height:26,
+              width:92
+          });
+          
+      PayPalButton.addEventListener('click',function(e) {
+
+      //open link in safari - application will close
+      Titanium.Platform.openURL('http://localhost:3000/orders/create?amount=' + result.total_money);
+
+      });
+
+     win.add(PayPalButton);
+
 		};
+
 		xhr.onsendstream = function(e)
 		{
 			ind.value = e.progress ;
