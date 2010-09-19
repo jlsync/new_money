@@ -16,88 +16,112 @@ var ind=Titanium.UI.createProgressBar({
 win.add(ind);
 ind.show();
 
-Titanium.Media.openPhotoGallery({
-
-	success:function(event)
-	{
-		Ti.API.info("success! event: " + JSON.stringify(event));
-		var image = event.media;
-	
-		var xhr = Titanium.Network.createHTTPClient();
-
-		xhr.onerror = function(e)
-		{
-			Ti.UI.createAlertDialog({title:'Error', message:e.error}).show();
-			Ti.API.info('IN ERROR ' + e.error);
-		};
-		xhr.setTimeout(20000);
-		xhr.onload = function(e)
-		{
-      ind.hide();
-
-			Ti.API.info('The response is: ' + this.responseText );
-      var result = JSON.parse(this.responseText);
-      var amount = result.total_money;
-			Ti.UI.createAlertDialog({title:'Your Money', message:'amount: £' + amount}).show();
-			Ti.API.info('IN ONLOAD ' + this.status + ' readyState ' + this.readyState);
-
-      var subwindow = Ti.UI.createWindow({ 
-        height: 100,
-        width: 100,
-        borderWidth: 1,
-        borderColor: "#CCC",
-        borderRadius: 6
-      });
-
-      var imgView = Ti.UI.createImageView({
-        url: 'http://192.168.109.165:3000/' + result.image_url ,
-          height: 480
-
-      });
-
-      var PayPalButton = Titanium.UI.createButton({
-          title: '',
-          //backgroundImage:'btn_xpressCheckout.gif',
-          backgroundImage:'btn_donate_LG.gif',
-              //top:280,
-              //right:20,
-              //left:150,
-              height:26,
-              width:92
-          });
-          
-      PayPalButton.addEventListener('click',function(e) {
-
-      //open link in safari - application will close
-      // justgiving 2344 is WWF UK
-      var url = 'http://www.justgiving.com/donation/direct/charity/2344?frequency=single&amount=' + amount ;
-			Ti.API.info('url is  ' + url );
-      Titanium.Platform.openURL(url);
-      });
-
-     win.add(imgView);
-     win.add(PayPalButton);
-
-		};
-
-		xhr.onsendstream = function(e)
-		{
-			ind.value = e.progress ;
-			Ti.API.info('ONSENDSTREAM - PROGRESS: ' + e.progress);
-		};
-		// open the client
-		xhr.open('POST','http://192.168.109.165:3000/images');
-
-		// send the data
-		xhr.send({'upload[image_file]':image,message:'check me out'});
-		
-	},
-	cancel:function()
-	{
-
-	},
-	error:function(error)
-	{
-	},
-	allowEditing:false
+var BrowseButton = Titanium.UI.createButton({
+    title: 'Browse Album',
+    text: 'Browse Album',
+    zIndex: 10,
+    visible: true,
+    background: '#FFF',
+    borderRadius: 5,
+    borderWidth: 3,
+    borderColor: '#3F2',
+    top:250,
+    height: 40,
+    width: 140
 });
+
+BrowseButton.addEventListener('click',function(e) {
+
+  BrowseButton.hide();
+
+
+  Titanium.Media.openPhotoGallery({
+
+    success:function(event)
+    {
+      Ti.API.info("success! event: " + JSON.stringify(event));
+      var image = event.media;
+    
+      var xhr = Titanium.Network.createHTTPClient();
+
+      xhr.onerror = function(e)
+      {
+        Ti.UI.createAlertDialog({title:'Error', message:e.error}).show();
+        Ti.API.info('IN ERROR ' + e.error);
+      };
+      xhr.setTimeout(20000);
+      xhr.onload = function(e)
+      {
+        ind.hide();
+
+        Ti.API.info('The response is: ' + this.responseText );
+        var result = JSON.parse(this.responseText);
+        var amount = result.total_money;
+        Ti.UI.createAlertDialog({title:'Your Money', message:'amount: £' + amount}).show();
+        Ti.API.info('IN ONLOAD ' + this.status + ' readyState ' + this.readyState);
+
+        var subwindow = Ti.UI.createWindow({ 
+          height: 100,
+          width: 100,
+          borderWidth: 1,
+          borderColor: "#CCC",
+          borderRadius: 6
+        });
+
+        var imgView = Ti.UI.createImageView({
+          url: 'http://192.168.109.165:3000/' + result.image_url ,
+            height: 480
+
+        });
+
+        var PayPalButton = Titanium.UI.createButton({
+            title: '',
+            //backgroundImage:'btn_xpressCheckout.gif',
+            backgroundImage:'btn_donate_LG.gif',
+                //top:280,
+                //right:20,
+                //left:150,
+                height:26,
+                width:92
+            });
+            
+        PayPalButton.addEventListener('click',function(e) {
+
+        //open link in safari - application will close
+        // justgiving 2344 is WWF UK
+        var url = 'http://www.justgiving.com/donation/direct/charity/2344?frequency=single&amount=' + amount ;
+        Ti.API.info('url is  ' + url );
+        Titanium.Platform.openURL(url);
+        });
+
+      win.add(imgView);
+      win.add(PayPalButton);
+      BrowseButton.show();
+
+      };
+
+      xhr.onsendstream = function(e)
+      {
+        ind.value = e.progress ;
+        Ti.API.info('ONSENDSTREAM - PROGRESS: ' + e.progress);
+      };
+      // open the client
+      xhr.open('POST','http://192.168.109.165:3000/images');
+
+      // send the data
+      xhr.send({'upload[image_file]':image,message:'check me out'});
+      
+    },
+    cancel:function()
+    {
+
+    },
+    error:function(error)
+    {
+    },
+    allowEditing:false
+  });
+
+});
+
+win.add(BrowseButton);

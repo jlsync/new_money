@@ -9,7 +9,7 @@ var tabGroup = Titanium.UI.createTabGroup();
 // create base UI tab and root window
 //
 var win1 = Titanium.UI.createWindow({  
-    title:'Tab 1',
+    title:'Count & Give',
     backgroundColor:'#fff'
 });
 var tab1 = Titanium.UI.createTab({  
@@ -60,7 +60,7 @@ var win3 = Titanium.UI.createWindow({
 });
 var tab3 = Titanium.UI.createTab({  
     icon:'KS_nav_ui.png',
-    title:'Tab 3',
+    title:'Camera',
     window:win3
 });
 // four 
@@ -83,7 +83,7 @@ var win5 = Titanium.UI.createWindow({
 });
 var tab5 = Titanium.UI.createTab({  
     icon:'KS_nav_ui.png',
-    title:'Tab 5',
+    title:'Albums',
     window:win5
 });
 
