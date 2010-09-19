@@ -63,17 +63,28 @@ var tab3 = Titanium.UI.createTab({
     title:'Tab 3',
     window:win3
 });
-
-// three 
+// four 
 
 var win4 = Titanium.UI.createWindow({
-    url:'xhr_fileupload.js',
-    title:'File Upload'
+    url:'camera2.js',
+    title:'Camera2'
 });
 var tab4 = Titanium.UI.createTab({  
     icon:'KS_nav_ui.png',
-    title:'Tab 4',
+    title:'Cam 2',
     window:win4
+});
+
+// four 
+
+var win5 = Titanium.UI.createWindow({
+    url:'xhr_fileupload.js',
+    title:'File Upload'
+});
+var tab5 = Titanium.UI.createTab({  
+    icon:'KS_nav_ui.png',
+    title:'Tab 5',
+    window:win5
 });
 
 
@@ -84,6 +95,7 @@ tabGroup.addTab(tab1);
 tabGroup.addTab(tab2);  
 tabGroup.addTab(tab3);  
 tabGroup.addTab(tab4);  
+tabGroup.addTab(tab5);  
 
 
 // open tab group

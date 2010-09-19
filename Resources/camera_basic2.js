@@ -1,5 +1,6 @@
 var win = Titanium.UI.currentWindow;
 
+
 var ind=Titanium.UI.createProgressBar({
 	width:200,
 	height:50,
@@ -13,16 +14,18 @@ var ind=Titanium.UI.createProgressBar({
 	color:'#888'
 });
 
-win.add(ind);
-ind.show();
-
-Titanium.Media.openPhotoGallery({
+Titanium.Media.showCamera({
 
 	success:function(event)
 	{
-		Ti.API.info("success! event: " + JSON.stringify(event));
 		var image = event.media;
-	
+
+		Ti.API.debug('Our type was: '+event.mediaType);
+		if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO)
+		{
+			var imageView = Ti.UI.createImageView({width:win.width,height:win.height,image:event.media});
+			win.add(imageView);  
+
 		var xhr = Titanium.Network.createHTTPClient();
 
 		xhr.onerror = function(e)
@@ -83,14 +86,37 @@ Titanium.Media.openPhotoGallery({
 
 		// send the data
 		xhr.send({'upload[image_file]':image,message:'check me out'});
-		
+
+
+
+		}
+		else
+		{
+			alert("got the wrong type back ="+event.mediaType);
+		}
 	},
 	cancel:function()
 	{
-
 	},
 	error:function(error)
 	{
+		// create alert
+		var a = Titanium.UI.createAlertDialog({title:'Camera'});
+
+		// set message
+		if (error.code == Titanium.Media.NO_CAMERA)
+		{
+			a.setMessage('Please run this test on device');
+		}
+		else
+		{
+			a.setMessage('Unexpected error: ' + error.code);
+		}
+
+		// show alert
+		a.show();
 	},
-	allowEditing:false
+	saveToPhotoGallery:true,
+	allowEditing:false,
+	mediaTypes:[Ti.Media.MEDIA_TYPE_VIDEO,Ti.Media.MEDIA_TYPE_PHOTO],
 });
