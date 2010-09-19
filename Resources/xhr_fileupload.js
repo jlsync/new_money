@@ -49,6 +49,12 @@ Titanium.Media.openPhotoGallery({
         borderRadius: 6
       });
 
+      var imgView = Ti.UI.createImageView({
+        url: 'http://192.168.109.165:3000/' + result.image_url ,
+          height: 480
+
+      });
+
       var PayPalButton = Titanium.UI.createButton({
           title: '',
           //backgroundImage:'btn_xpressCheckout.gif',
@@ -69,6 +75,7 @@ Titanium.Media.openPhotoGallery({
       Titanium.Platform.openURL(url);
       });
 
+     win.add(imgView);
      win.add(PayPalButton);
 
 		};
