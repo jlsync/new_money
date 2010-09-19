@@ -38,7 +38,7 @@ Titanium.Media.openPhotoGallery({
 			Ti.API.info('The response is: ' + this.responseText );
       var result = JSON.parse(this.responseText);
       var amount = result.total_money;
-			Ti.UI.createAlertDialog({title:'Your Money', message:'amount: ' + amount}).show();
+			Ti.UI.createAlertDialog({title:'Your Money', message:'amount: £' + amount}).show();
 			Ti.API.info('IN ONLOAD ' + this.status + ' readyState ' + this.readyState);
 
       var subwindow = Ti.UI.createWindow({ 
