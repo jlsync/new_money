@@ -33,8 +33,9 @@ Titanium.Media.openPhotoGallery({
 		xhr.setTimeout(20000);
 		xhr.onload = function(e)
 		{
-      // for json: var result = eval('('+this.responseText+')');
-			Ti.UI.createAlertDialog({title:'Your Money', message:'result: ' + this.responseText}).show();
+      //var result = eval(this.responseText);
+      var result = JSON.parse(this.responseText);
+			Ti.UI.createAlertDialog({title:'Your Money', message:'result: ' + result.total_money}).show();
 			Ti.API.info('IN ONLOAD ' + this.status + ' readyState ' + this.readyState);
 		};
 		xhr.onsendstream = function(e)
